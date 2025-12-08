@@ -82,7 +82,7 @@ namespace DATABASPROJEKT
                 while (true)
                 {
                     // Main Menu
-                    Console.WriteLine("\n--- E-Commerce Console ---");
+                    Console.WriteLine("\n--- Amna's shop ---");
                     Console.WriteLine("Select Option: 1-Categories | 2-Customers | 3-Orders | 4-Products | 5-Quit");
                     Console.Write("Choice: ");
                     string input = Console.ReadLine()?.Trim() ?? string.Empty;
