@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DATABASPROJEKT.Models
 {
+    /// <summary>
+    /// Represents a customer in the e-commerce system.
+    /// </summary>
     public class Customer
     {
         // PK

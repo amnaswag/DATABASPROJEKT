@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DATABASPROJEKT.Models
 {
+    /// <summary>
+    /// Represents a category for products in the shop.
+    /// </summary>
     public class Category
     {
         // PK
