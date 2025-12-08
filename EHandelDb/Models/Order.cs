@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DATABASPROJEKT.Models
 {
+    /// <summary>
+    /// Represents a customer order in the shop.
+    /// </summary>
     public class Order
     {
         // PK

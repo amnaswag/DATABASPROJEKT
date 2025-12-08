@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DATABASPROJEKT.Models
 {
+    /// <summary>
+    /// Represents a single item line within an order, linking an order to a product.
+    /// </summary>
     public class OrderRow
     {
         // PK

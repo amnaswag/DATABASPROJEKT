@@ -164,8 +164,10 @@ namespace DATABASPROJEKT
                         }
                     }
                 }
+                /// <summary>
+                /// Displays menu and handles CRUD operations for customers.
+                /// </summary>
 
-                // Methods to view/add/edit/delete Customers
                 static async Task CustomerMenuAsync()
                 {
                     using var db = new ShopContext();
@@ -218,8 +220,10 @@ namespace DATABASPROJEKT
                         }
                     }
                 }
-
-                // Methods to view/add/edit/delete Orders
+                
+                /// <summary>
+                /// Displays menu and handles CRUD operations for orders.
+                /// </summary>
                 static async Task OrderMenuAsync()
                 {
                     using var db = new ShopContext();
@@ -274,7 +278,9 @@ namespace DATABASPROJEKT
                     }
                 }
 
-                // Methods to view/add/edit/delete Products
+                /// <summary>
+                /// Displays menu and handles CRUD operations for products.
+                /// </summary>
                 static async Task ProductMenuAsync()
                 {
                     using var db = new ShopContext();
@@ -327,10 +333,9 @@ namespace DATABASPROJEKT
                         }
                     }
                 } 
-                // After the main menu you click on these depending on what you choose.
-
-                // Methods for viewing/adding/editing/deleting Categories
-                
+                /// <summary>
+                /// Displays a list of all categories in the database.
+                /// </summary>
                 static async Task ListCategoriesAsync()
                 {
                     using var db = new ShopContext();
@@ -346,7 +351,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine($" {category.CategoryId} | {category.CategoryName} | {category.CategoryDescription} ");
                     }
                 }
-
+                
+                /// <summary>
+                /// Adds a new category based on user input.
+                /// </summary>
                 static async Task AddCategoryAsync()
                 {
                     using var db = new ShopContext();
@@ -386,6 +394,9 @@ namespace DATABASPROJEKT
                     }
                 }
 
+                /// <summary>
+                /// Edits an existing category.
+                /// </summary>
                 static async Task EditCategoryAsync(int editId)
                 {
                     using var db = new ShopContext();
@@ -440,6 +451,9 @@ namespace DATABASPROJEKT
                     }
                 }
 
+                /// <summary>
+                /// Deletes a category based on its ID.
+                /// </summary>
                 static async Task DeleteCategoryAsync(int deleteId)
                 {
                     using var db = new ShopContext();
@@ -464,7 +478,9 @@ namespace DATABASPROJEKT
                     }
                 }
 
-                // Methods to view/add/edit/delete Customers
+                ///// <summary>
+                /// Displays a list of all customers in the database.
+                /// </summary>
                 static async Task ListCustomersAsync()
                 {
                     using var db = new ShopContext();
@@ -480,7 +496,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine($" {customer.CustomerId} | {customer.CustomerName} | {customer.Email} | {customer.City} ");
                     }
                 }
-
+                
+                /// <summary>
+                /// Adds a new customer based on user input.
+                /// </summary>
                 static async Task AddCustomerAsync()
                 {
                     using var db = new ShopContext();
@@ -537,7 +556,10 @@ namespace DATABASPROJEKT
                     }
 
                 }
-
+                
+                /// <summary>
+                /// Edits an existing customer.
+                /// </summary>
                 static async Task EditCustomerAsync(int editId)
                 {
                     using var db = new ShopContext();
@@ -615,7 +637,10 @@ namespace DATABASPROJEKT
                     }
 
                 }
-
+                
+                /// <summary>
+                /// Deletes a customer based on its ID.
+                /// </summary>
                 static async Task DeleteCustomerAsync(int deleteId)
                 {
                     using var db = new ShopContext();
@@ -638,9 +663,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine("DB Error: " + exception.GetBaseException().Message);
                     }
                 }
-
-
-                // Methods to view/add/edit/delete Orders
+                
+                /// <summary>
+                /// Displays a list of all orders, including the customer they belong to.
+                /// </summary>
                 static async Task ListOrdersAsync()
                 {
                     using var db = new ShopContext();
@@ -657,7 +683,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine($" {order.OrderId} | {order.Customer?.CustomerName} | {order.OrderDate:yyyy-MM-dd} | {order.Status} ");
                     }
                 }
-
+                
+                /// <summary>
+                /// Adds a new order with associated order rows.
+                /// </summary>
                 static async Task AddOrderAsync()
                 {
                     using var db = new ShopContext();
@@ -773,7 +802,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine("DB Error: " + exception.GetBaseException().Message);
                     }
                 }
-
+                
+                /// <summary>
+                /// Edits an existing order. Allows changing customer, date, and status.
+                /// </summary>
                 static async Task EditOrderAsync(int editId)
                 {
                     using var db = new ShopContext();
@@ -849,7 +881,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine("DB Error: " + exception.GetBaseException().Message);
                     }
                 }
-
+                
+                /// <summary>
+                /// Deletes an order based on its ID.
+                /// </summary>
                 static async Task DeleteOrderAsync(int deleteId)
                 {
                     using var db = new ShopContext();
@@ -873,8 +908,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine("DB Error: " + exception.GetBaseException().Message);
                     }
                 }
-
-                // Methods to view/add/edit/delete Products
+                
+                /// <summary>
+                /// Displays a list of all products in the database.
+                /// </summary>
                 static async Task ListProductsAsync()
                 {
                     using var db = new ShopContext();
@@ -890,7 +927,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine($" {product.ProductId} | {product.ProductName} | {product.Price} ");
                     }
                 }
-
+                
+                /// <summary>
+                /// Adds a new product based on user input and links it to an existing category.
+                /// </summary>
                 static async Task AddProductAsync()
                 {
                     using var db = new ShopContext();
@@ -963,7 +1003,10 @@ namespace DATABASPROJEKT
                         Console.WriteLine("DB Error: " + exception.GetBaseException().Message);
                     }
                 }
-
+                
+                /// <summary>
+                /// Edits an existing product. Allows changing name, price, and category.
+                /// </summary>
                 static async Task EditProductAsync(int editId)
                 {
                     using var db = new ShopContext();
@@ -1043,7 +1086,10 @@ namespace DATABASPROJEKT
                     }
 
                 }
-
+                
+                /// <summary>
+                /// Deletes a product based on its ID.
+                /// </summary>
                 static async Task DeleteProductAsync(int deleteId)
                 {
                     using var db = new ShopContext();
