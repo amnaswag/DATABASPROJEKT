@@ -12,10 +12,10 @@ namespace DATABASPROJEKT.Models
         // PK
         public int OrderRowId { get; set; }
 
-        // FK -> Order
+        // FK --> Order
         public int OrderId { get; set; }
 
-        // FK -> Product
+        // FK --> Product
         public int ProductId { get; set; }
 
         [Required]
