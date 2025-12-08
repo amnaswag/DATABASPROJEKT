@@ -13,7 +13,7 @@ namespace DATABASPROJEKT
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine("DB: " + Path.Combine(AppContext.BaseDirectory, "shop.db"));
+            Console.WriteLine("DB Location: " + Path.Combine(AppContext.BaseDirectory, "shop.db"));
 
             using (var db = new ShopContext())
             {
@@ -28,7 +28,7 @@ namespace DATABASPROJEKT
                     );
 
                     await db.SaveChangesAsync();
-                    Console.WriteLine("Categories seeded to DB");
+                    Console.WriteLine("Categories initialized.");
                 }
 
                 if (!await db.Customers.AnyAsync())
@@ -40,7 +40,7 @@ namespace DATABASPROJEKT
                     );
 
                     await db.SaveChangesAsync();
-                    Console.WriteLine("Customers seeded to DB");
+                    Console.WriteLine("Customers initialized.");
                 }
 
                 if (!await db.Orders.AnyAsync())
@@ -56,7 +56,7 @@ namespace DATABASPROJEKT
                     );
 
                     await db.SaveChangesAsync();
-                    Console.WriteLine("Orders seeded to DB");
+                    Console.WriteLine("Orders initialized.");
                 }
 
                 var dairy = await db.Categories.FirstAsync(g => g.CategoryName == "Kylvaror");
@@ -76,15 +76,15 @@ namespace DATABASPROJEKT
                     );
 
                     await db.SaveChangesAsync();
-                    Console.WriteLine("Products seeded to DB");
+                    Console.WriteLine("Products initialized.");
                 }
 
                 while (true)
                 {
                     // Main Menu
-                    Console.WriteLine("\n----Welcome to shop----");
-                    Console.WriteLine("\nPick an option: 1 - Categories | 2 - Customers | 3 - Orders | 4 - Products | 5 - Exit ");
-                    Console.WriteLine("Your choice: ");
+                    Console.WriteLine("\n--- E-Commerce Console ---");
+                    Console.WriteLine("Select Option: 1-Categories | 2-Customers | 3-Orders | 4-Products | 5-Quit");
+                    Console.Write("Choice: ");
                     string input = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     switch (input)
@@ -102,10 +102,10 @@ namespace DATABASPROJEKT
                             await ProductMenuAsync();
                             break;
                         case "5":
-                            Console.WriteLine("Exiting...");
+                            Console.WriteLine("Exiting application.");
                             return;
                         default:
-                            Console.WriteLine("Please enter a valid option.");
+                            Console.WriteLine("Invalid selection. Try again.");
                             break;
                     }
 
@@ -119,8 +119,8 @@ namespace DATABASPROJEKT
 
                     while (true)
                     {
-                        Console.WriteLine("Would you like to: 1 - Show categories | 2 - Add category | 3 - Edit Category | 4 - Delete category | 5 - Return to menu ");
-                        Console.WriteLine("Your choice: ");
+                        Console.WriteLine("Category Menu: 1-List | 2-Add | 3-Edit | 4-Delete | 5-Return");
+                        Console.Write("Choice: ");
                         string input = Console.ReadLine()?.Trim() ?? string.Empty;
 
                         switch (input)
@@ -132,34 +132,34 @@ namespace DATABASPROJEKT
                                 await AddCategoryAsync();
                                 break;
                             case "3":
-                                Console.Write("Enter category id to edit: ");
+                                Console.Write("Enter category ID to edit: ");
                                 var editInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                                 if (!int.TryParse(editInput, out int editId))
                                 {
-                                    Console.WriteLine("You must enter a valid id.");
+                                    Console.WriteLine("Error: Must enter a valid ID.");
                                     Console.ReadKey();
                                     break;
                                 }
                                 await EditCategoryAsync(editId);
                                 break;
                             case "4":
-                                Console.Write("Enter category id to delete: ");
+                                Console.Write("Enter category ID to delete: ");
                                 var deleteInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                                 if (!int.TryParse(deleteInput, out int deleteId))
                                 {
-                                    Console.WriteLine("You must enter a valid id.");
+                                    Console.WriteLine("Error: Must enter a valid ID.");
                                     Console.ReadKey();
                                     break;
                                 }
                                 await DeleteCategoryAsync(deleteId);
                                 break;
                             case "5":
-                                Console.WriteLine("Returning to main menu...");
+                                Console.WriteLine("Returning to main menu.");
                                 return;
                             default:
-                                Console.WriteLine("Please enter a valid option");
+                                Console.WriteLine("Invalid selection. Try again.");
                                 break;
                         }
                     }
@@ -174,8 +174,8 @@ namespace DATABASPROJEKT
 
                     while (true)
                     {
-                        Console.WriteLine("Would you like to: 1 - Show customers | 2 - Add customer | 3 - Edit customer | 4 - Delete customer | 5 - Return to menu ");
-                        Console.WriteLine("Your choice: ");
+                        Console.WriteLine("Customer Menu: 1-List | 2-Add | 3-Edit | 4-Delete | 5-Return");
+                        Console.Write("Choice: ");
                         string input = Console.ReadLine() ?? string.Empty;
 
                         switch (input)
@@ -187,34 +187,34 @@ namespace DATABASPROJEKT
                                 await AddCustomerAsync();
                                 break;
                             case "3":
-                                Console.Write("Enter customer id to edit: ");
+                                Console.Write("Enter customer ID to edit: ");
                                 var editInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                                 if (!int.TryParse(editInput, out int editId))
                                 {
-                                    Console.WriteLine("You must enter a valid id.");
+                                    Console.WriteLine("Error: Must enter a valid ID.");
                                     Console.ReadKey();
                                     break;
                                 }
                                 await EditCustomerAsync(editId);
                                 break;
                             case "4":
-                                Console.Write("Enter customer id to delete: ");
+                                Console.Write("Enter customer ID to delete: ");
                                 var deleteInput = Console.ReadLine()?.Trim()?.Trim() ?? string.Empty;
 
                                 if (!int.TryParse(deleteInput, out int deleteId))
                                 {
-                                    Console.WriteLine("You must enter a valid id.");
+                                    Console.WriteLine("Error: Must enter a valid ID.");
                                     Console.ReadKey();
                                     break;
                                 }
                                 await DeleteCustomerAsync(deleteId);
                                 break;
                             case "5":
-                                Console.WriteLine("Returning to main menu...");
+                                Console.WriteLine("Returning to main menu.");
                                 return;
                             default:
-                                Console.WriteLine("Please enter a valid option");
+                                Console.WriteLine("Invalid selection. Try again.");
                                 break;
 
                         }
@@ -230,8 +230,8 @@ namespace DATABASPROJEKT
 
                     while (true)
                     {
-                        Console.WriteLine("Would you like to: 1 - Show orders | 2 - Add order | 3 - Edit Order | 4 - Delete Order | 5 - Return to menu ");
-                        Console.WriteLine("Your choice: ");
+                        Console.WriteLine("Order Menu: 1-List | 2-Add | 3-Edit | 4-Delete | 5-Return");
+                        Console.Write("Choice: ");
                         string input = Console.ReadLine()?.Trim() ?? string.Empty;
 
 
@@ -244,34 +244,34 @@ namespace DATABASPROJEKT
                                 await AddOrderAsync();
                                 break;
                             case "3":
-                                Console.Write("Enter customer id to edit: ");
+                                Console.Write("Enter order ID to edit: ");
                                 var editInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                                 if (!int.TryParse(editInput, out int editId))
                                 {
-                                    Console.WriteLine("You must enter a valid id.");
+                                    Console.WriteLine("Error: Must enter a valid ID.");
                                     Console.ReadKey();
                                     break;
                                 }
                                 await EditOrderAsync(editId);
                                 break;
                             case "4":
-                                Console.Write("Enter customer id to delete: ");
+                                Console.Write("Enter order ID to delete: ");
                                 var deleteInput = Console.ReadLine()?.Trim()?.Trim() ?? string.Empty;
 
                                 if (!int.TryParse(deleteInput, out int deleteId))
                                 {
-                                    Console.WriteLine("You must enter a valid id.");
+                                    Console.WriteLine("Error: Must enter a valid ID.");
                                     Console.ReadKey();
                                     break;
                                 }
                                 await DeleteOrderAsync(deleteId);
                                 break;
                             case "5":
-                                Console.WriteLine("Returning to main menu...");
+                                Console.WriteLine("Returning to main menu.");
                                 return;
                             default:
-                                Console.WriteLine("Please enter a valid option");
+                                Console.WriteLine("Invalid selection. Try again.");
                                 break;
 
                         }
@@ -287,8 +287,8 @@ namespace DATABASPROJEKT
 
                     while (true)
                     {
-                        Console.WriteLine("Would you like to: 1 - Show products | 2 - Add product | 3 - Edit product | 4 - Delete product | 5 - Return to menu ");
-                        Console.WriteLine("Your choice: ");
+                        Console.WriteLine("Product Menu: 1-List | 2-Add | 3-Edit | 4-Delete | 5-Return");
+                        Console.Write("Choice: ");
                         string input = Console.ReadLine()?.Trim() ?? string.Empty;
 
 
@@ -301,34 +301,34 @@ namespace DATABASPROJEKT
                                 await AddProductAsync();
                                 break;
                             case "3":
-                                Console.Write("Enter product id to edit: ");
+                                Console.Write("Enter product ID to edit: ");
                                 var editInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                                 if (!int.TryParse(editInput, out int editId))
                                 {
-                                    Console.WriteLine("You must enter a valid id.");
+                                    Console.WriteLine("Error: Must enter a valid ID.");
                                     Console.ReadKey();
                                     break;
                                 }
                                 await EditProductAsync(editId);
                                 break;
                             case "4":
-                                Console.Write("Enter product id to delete: ");
+                                Console.Write("Enter product ID to delete: ");
                                 var deleteInput = Console.ReadLine()?.Trim()?.Trim() ?? string.Empty;
 
                                 if (!int.TryParse(deleteInput, out int deleteId))
                                 {
-                                    Console.WriteLine("You must enter a valid id.");
+                                    Console.WriteLine("Error: Must enter a valid ID.");
                                     Console.ReadKey();
                                     break;
                                 }
                                 await DeleteProductAsync(deleteId);
                                 break;
                             case "5":
-                                Console.WriteLine("Returning to main menu...");
+                                Console.WriteLine("Returning to main menu.");
                                 return;
                             default:
-                                Console.WriteLine("Please enter a valid option");
+                                Console.WriteLine("Invalid selection. Try again.");
                                 break;
                         }
                     }
@@ -345,6 +345,7 @@ namespace DATABASPROJEKT
                         .OrderBy(g => g.CategoryId)
                         .ToListAsync();
 
+                    Console.WriteLine("--- Categories ---");
                     Console.WriteLine(" ID | Name | Description ");
                     foreach (var category in categories)
                     {
@@ -359,21 +360,21 @@ namespace DATABASPROJEKT
                 {
                     using var db = new ShopContext();
 
-                    Console.Write("Choose a category name: ");
+                    Console.Write("Enter category name: ");
                     var name = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (string.IsNullOrEmpty(name) || name.Length > 100)
                     {
-                        Console.WriteLine("Name is required and must to be less than 100 characters.");
+                        Console.WriteLine("Error: Name required (Max 100 char).");
                         return;
                     }
 
-                    Console.Write("Write a category description: ");
+                    Console.Write("Enter category description: ");
                     var description = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (string.IsNullOrEmpty(description) || description.Length > 100)
                     {
-                        Console.WriteLine("Description is required and must be less than 100 characters.");
+                        Console.WriteLine("Error: Description required (Max 100 char).");
                         return;
                     }
 
@@ -386,7 +387,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Category added!");
+                        Console.WriteLine("Success: Category saved.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -404,36 +405,36 @@ namespace DATABASPROJEKT
                     var category = await db.Categories.FirstOrDefaultAsync(g => g.CategoryId == editId);
                     if (category == null)
                     {
-                        Console.WriteLine("Category not found!");
+                        Console.WriteLine("Error: Category not found.");
                         return;
                     }
 
-                    Console.WriteLine($"Editing category: {category.CategoryId}");
+                    Console.WriteLine($"--- Editing Category ID: {category.CategoryId} ---");
                     Console.WriteLine($"Current name: {category.CategoryName}");
                     Console.WriteLine($"Current description: {category.CategoryDescription}");
 
-                    Console.Write($"New category name (Press enter to keep current): ");
+                    Console.Write($"New name (Enter to keep current): ");
                     var name = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!string.IsNullOrEmpty(name))
                     {
                         if (name.Length > 100)
                         {
-                            Console.WriteLine("Category name is required and must be less than 100 characters.");
+                            Console.WriteLine("Error: Name required (Max 100 char).");
                             return;
                         }
 
                         category.CategoryName = name;
                     }
 
-                    Console.Write($"New description (Press enter to keep current): ");
+                    Console.Write($"New description (Enter to keep current): ");
                     var description = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!string.IsNullOrEmpty(description))
                     {
                         if (description.Length > 100)
                         {
-                            Console.WriteLine("Description is required and must be less than 100 characters");
+                            Console.WriteLine("Error: Description required (Max 100 char).");
                             return;
                         }
 
@@ -443,7 +444,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Changes saved!");
+                        Console.WriteLine("Success: Changes saved.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -461,7 +462,7 @@ namespace DATABASPROJEKT
                     var category = await db.Categories.FirstOrDefaultAsync(g => g.CategoryId == deleteId);
                     if (category == null)
                     {
-                        Console.WriteLine("Category not found!");
+                        Console.WriteLine("Error: Category not found.");
                         return;
                     }
 
@@ -470,7 +471,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Category deleted!");
+                        Console.WriteLine("Success: Category deleted.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -490,6 +491,7 @@ namespace DATABASPROJEKT
                         .OrderBy(c => c.CustomerId)
                         .ToListAsync();
 
+                    Console.WriteLine("--- Customers ---");
                     Console.WriteLine(" ID | Name | Email | City ");
                     foreach (var customer in customers)
                     {
@@ -504,37 +506,37 @@ namespace DATABASPROJEKT
                 {
                     using var db = new ShopContext();
 
-                    Console.WriteLine("Choose a customer name: ");
+                    Console.Write("Enter customer name: ");
                     var name = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (string.IsNullOrEmpty(name) || name.Length > 100)
                     {
-                        Console.WriteLine("Name is required and must be less than 100 characters.");
+                        Console.WriteLine("Error: Name required (Max 100 char).");
                         return;
                     }
 
-                    Console.Write("Email: ");
+                    Console.Write("Enter email: ");
                     var mail = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (string.IsNullOrEmpty(mail) || mail.Length > 100)
                     {
-                        Console.WriteLine("Email is required and must be less than 100 characters.");
+                        Console.WriteLine("Error: Email required (Max 100 char).");
                         return;
                     }
 
-                    Console.Write("City: ");
+                    Console.Write("Enter city: ");
                     var city = Console.ReadLine()?.Trim() ?? string.Empty;
                     
                     if (string.IsNullOrEmpty(mail) ||  city.Length > 100)
                     {
-                        Console.WriteLine("City is required and must be less than 100 characters.");
+                        Console.WriteLine("Error: City required (Max 100 char).");
                         return;
                     }
 
                     var emailExists = await db.Customers.AnyAsync(c => c.Email == mail);
                     if (emailExists)
                     {
-                        Console.WriteLine("A customer with this email already exists. Please choose a diffrent email.");
+                        Console.WriteLine("Error: Email already exists. Use a different email.");
                         return;
                     }
 
@@ -548,7 +550,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Customer added!");
+                        Console.WriteLine("Success: Customer saved.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -567,37 +569,37 @@ namespace DATABASPROJEKT
                     var customer = await db.Customers.FirstOrDefaultAsync(c => c.CustomerId == editId);
                     if (customer == null)
                     {
-                        Console.WriteLine("Customer not found.");
+                        Console.WriteLine("Error: Customer not found.");
                         return;
                     }
 
-                    Console.WriteLine($"Editing customer: {customer.CustomerId}");
+                    Console.WriteLine($"--- Editing Customer ID: {customer.CustomerId} ---");
                     Console.WriteLine($"Current name: {customer.CustomerName}");
                     Console.WriteLine($"Current email: {customer.Email}");
                     Console.WriteLine($"Current city: {customer.City}");
 
-                    Console.Write($"New customer name (Press enter to keep current): ");
+                    Console.Write($"New name (Enter to keep current): ");
                     var name = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!string.IsNullOrEmpty(name))
                     {
                         if (name.Length > 100)
                         {
-                            Console.WriteLine("Customer name is required and must be less than 100 characters.");
+                            Console.WriteLine("Error: Name required (Max 100 char).");
                             return;
                         }
 
                         customer.CustomerName = name;
                     }
 
-                    Console.Write($"New email (Press enter to keep current): ");
+                    Console.Write($"New email (Enter to keep current): ");
                     var mail = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!string.IsNullOrEmpty(mail))
                     {
                         if (mail.Length > 100)
                         {
-                            Console.WriteLine("Email is required and must be less than 100 characters.");
+                            Console.WriteLine("Error: Email required (Max 100 char).");
                             return;
                         }
 
@@ -605,21 +607,21 @@ namespace DATABASPROJEKT
                             .AnyAsync(c => c.Email == mail && c.CustomerId != editId);
                         if (emailTaken)
                         {
-                            Console.WriteLine("This email is already taken, try another.");
+                            Console.WriteLine("Error: Email already taken. Try another.");
                             return;
                         }
 
                         customer.Email = mail;
                     }
 
-                    Console.Write($"New city (Press enter to keep current): ");
+                    Console.Write($"New city (Enter to keep current): ");
                     var city = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!string.IsNullOrEmpty(city))
                     {
                         if (city.Length > 100)
                         {
-                            Console.WriteLine("City is required and must be less than 100 characters.");
+                            Console.WriteLine("Error: City required (Max 100 char).");
                             return;
                         }
 
@@ -629,7 +631,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Changes saved");
+                        Console.WriteLine("Success: Changes saved.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -648,7 +650,7 @@ namespace DATABASPROJEKT
                     var customer = await db.Customers.FirstOrDefaultAsync(c => c.CustomerId == deleteId);
                     if (customer == null)
                     {
-                        Console.WriteLine("Customer not found!");
+                        Console.WriteLine("Error: Customer not found.");
                     }
 
                     db.Customers.Remove(customer!);
@@ -656,7 +658,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Customer deleted!");
+                        Console.WriteLine("Success: Customer deleted.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -677,6 +679,7 @@ namespace DATABASPROJEKT
                         .OrderBy(o => o.OrderId)
                         .ToListAsync();
 
+                    Console.WriteLine("--- Orders ---");
                     Console.WriteLine(" OrderID | Customer | OrderDate | Status ");
                     foreach (var order in orders)
                     {
@@ -698,21 +701,22 @@ namespace DATABASPROJEKT
 
                     if (!customers.Any())
                     {
-                        Console.WriteLine("No customers found.");
+                        Console.WriteLine("Error: No customers found.");
                         return;
                     }
 
+                    Console.WriteLine("--- Available Customers ---");
                     Console.WriteLine(" ID | Name | Email ");
                     foreach (var customer in customers)
                     {
                         Console.WriteLine($" {customer.CustomerId} | {customer.CustomerName} | {customer.Email} ");
                     }
 
-                    Console.Write("Please enter customer id: ");
+                    Console.Write("Enter customer ID: ");
                     if (!int.TryParse(Console.ReadLine(), out var customerId) || 
                         !customers.Any(c => c.CustomerId == customerId))
                     {
-                        Console.WriteLine("Invalid input of customer id");
+                        Console.WriteLine("Error: Invalid customer ID.");
                         return;
                     }
 
@@ -734,20 +738,21 @@ namespace DATABASPROJEKT
 
                         if (!products.Any())
                         {
-                            Console.WriteLine("No products found.");
+                            Console.WriteLine("Error: No products found.");
                             return;
                         }
 
+                        Console.WriteLine("--- Available Products ---");
                         Console.WriteLine(" ID | Name | Price ");
                         foreach (var product in products)
                         {
                             Console.WriteLine($" {product.ProductId} | {product.ProductName} | {product.Price} ");
                         }
 
-                        Console.Write("Enter product id: ");
+                        Console.Write("Enter product ID: ");
                         if (!int.TryParse(Console.ReadLine(), out var productId))
                         {
-                            Console.WriteLine("Invalid input of product id");
+                            Console.WriteLine("Error: Invalid product ID.");
                             continue;
                         }
 
@@ -755,14 +760,14 @@ namespace DATABASPROJEKT
 
                         if (chosenProduct == null)
                         {
-                            Console.WriteLine("Product not found.");
+                            Console.WriteLine("Error: Product not found.");
                             continue;
                         }
 
                         Console.Write("Enter quantity: ");
                         if (!int.TryParse(Console.ReadLine(),out var quantity) || quantity <= 0)
                         {
-                            Console.WriteLine("Invalid input");
+                            Console.WriteLine("Error: Invalid quantity.");
                             continue;
                         }
 
@@ -776,7 +781,7 @@ namespace DATABASPROJEKT
 
                         orderRows.Add(row);
 
-                        Console.Write("Do you want to add a new order row ? yes/no: ");
+                        Console.Write("Add another order row? (yes/no): ");
                         var answer = Console.ReadLine()?.Trim().ToLowerInvariant();
                         if (answer != "yes")
                             break;
@@ -784,7 +789,7 @@ namespace DATABASPROJEKT
 
                     if (!orderRows.Any())
                     {
-                        Console.WriteLine("Order must contain at least one order row.");
+                        Console.WriteLine("Error: Order must contain items.");
                         return;
                     }
 
@@ -795,7 +800,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine($"Order {order.OrderId} created!");
+                        Console.WriteLine($"Success: Order {order.OrderId} created.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -816,55 +821,55 @@ namespace DATABASPROJEKT
 
                     if (order == null)
                     {
-                        Console.WriteLine("Order not found.");
+                        Console.WriteLine("Error: Order not found.");
                         return;
                     }
 
-                    Console.WriteLine($"Editing order: {order.OrderId}");
+                    Console.WriteLine($"--- Editing Order ID: {order.OrderId} ---");
                     Console.WriteLine($"Current customer: {order.Customer?.CustomerName}");
-                    Console.WriteLine($"Current order date: {order.OrderDate}");
+                    Console.WriteLine($"Current date: {order.OrderDate}");
                     Console.WriteLine($"Current status: {order.Status}");
 
-                    Console.Write("Enter new customer id (Press enter to keep current): ");
+                    Console.Write("Enter new customer ID (Enter to keep current): ");
                     var input = Console.ReadLine()?.Trim() ?? string.Empty;
                     if (!string.IsNullOrEmpty(input))
                     {
                         if (!int.TryParse(input, out int id) || id <= 0)
                         {
-                            Console.WriteLine("Invalid customer id.");
+                            Console.WriteLine("Error: Invalid customer ID.");
                             return;
                         }
 
                         var customerExists = await db.Customers.AnyAsync(c => c.CustomerId == id);
                         if (!customerExists)
                         {
-                            Console.WriteLine("Customer does not exist");
+                            Console.WriteLine("Error: Customer does not exist.");
                             return;
                         }
 
                         order.CustomerId = id;
                     }
 
-                    Console.Write("New Order date - yyyy-MM-dd (Press enter to keep current): ");
+                    Console.Write("New date (YYYY-MM-DD) (Enter to keep current): ");
                     var dateInput = Console.ReadLine()?.Trim() ?? string.Empty;
                     if (!string.IsNullOrEmpty(dateInput))
                     {
                         if (!DateTime.TryParse(dateInput, out var newDate))
                         {
-                            Console.WriteLine("Invalid date format.");
+                            Console.WriteLine("Error: Invalid date format.");
                             return;
                         }
 
                         order.OrderDate = newDate;
                     }
 
-                    Console.Write("New status (Pending/Shipped/Cancelled) (Press enter to keep current): ");
+                    Console.Write("New status (Pending/Shipped/Cancelled) (Enter to keep current): ");
                     var statusInput = Console.ReadLine()?.Trim() ?? string.Empty;
                     if (!string.IsNullOrEmpty(statusInput))
                     {
                         if (statusInput.Length > 100)
                         {
-                            Console.WriteLine("Status too long, keep it under 100 characters.");
+                            Console.WriteLine("Error: Status too long (Max 100 char).");
                             return;
                         }
 
@@ -874,7 +879,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Changes saved!");
+                        Console.WriteLine("Success: Changes saved.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -892,7 +897,7 @@ namespace DATABASPROJEKT
                     var order = await db.Orders.FirstOrDefaultAsync(o => o.OrderId == deleteId);
                     if (order == null)
                     {
-                        Console.WriteLine("Order not found");
+                        Console.WriteLine("Error: Order not found.");
                         return;
                     }
 
@@ -901,7 +906,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Order deleted!");
+                        Console.WriteLine("Success: Order deleted.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -921,6 +926,7 @@ namespace DATABASPROJEKT
                         .OrderBy(p => p.ProductId)
                         .ToListAsync();
 
+                    Console.WriteLine("--- Products ---");
                     Console.WriteLine(" ID | Name | Price ");
                     foreach (var product in products)
                     {
@@ -942,24 +948,24 @@ namespace DATABASPROJEKT
 
                     if (!categories.Any())
                     {
-                        Console.WriteLine("No categories found. Add a category first.");
+                        Console.WriteLine("Error: No categories found. Add a category first.");
                         return;
                     }
 
-                    Console.WriteLine("Available categories: ");
+                    Console.WriteLine("--- Available Categories ---");
                     Console.WriteLine(" ID | Name");
                     foreach (var category in categories)
                     {
                         Console.WriteLine($" {category.CategoryId} | {category.CategoryName} ");
                     }
 
-                    Console.Write("Please enter category id: ");
+                    Console.Write("Enter category ID: ");
                     var categoryInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!int.TryParse(categoryInput, out var categoryId) || 
                         !categories.Any(c => c.CategoryId == categoryId))
                     {
-                        Console.WriteLine("Invalid category id");
+                        Console.WriteLine("Error: Invalid category ID.");
                         return;
                     }
 
@@ -970,7 +976,7 @@ namespace DATABASPROJEKT
                     {
                         if (name.Length > 100)
                         {
-                            Console.WriteLine("Product name must be less than 100 characters.");
+                            Console.WriteLine("Error: Product name required (Max 100 char).");
                             return;
                         }
                     }
@@ -980,7 +986,7 @@ namespace DATABASPROJEKT
 
                     if (!decimal.TryParse(priceInput, out var price) || price < 0)
                     {
-                        Console.WriteLine("Invalid price");
+                        Console.WriteLine("Error: Invalid price.");
                         return;
                     }
 
@@ -996,7 +1002,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Product added!");
+                        Console.WriteLine("Success: Product saved.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -1017,58 +1023,58 @@ namespace DATABASPROJEKT
 
                     if (product == null)
                     {
-                        Console.WriteLine("Product not found.");
+                        Console.WriteLine("Error: Product not found.");
                         return;
                     }
 
-                    Console.WriteLine($"Editing product: {product.ProductId}");
+                    Console.WriteLine($"--- Editing Product ID: {product.ProductId} ---");
                     Console.WriteLine($"Current name: {product.ProductName}");
                     Console.WriteLine($"Current price: {product.Price}");
                     Console.WriteLine($"Current category: {product.Category?.CategoryName}");
 
-                    Console.Write("Enter new product name (Press enter to keep current): ");
+                    Console.Write("New product name (Enter to keep current): ");
                     var nameInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!string.IsNullOrEmpty(nameInput))
                     {
                         if (nameInput.Length > 100)
                         {
-                            Console.WriteLine("Product name must be less than 100 characters.");
+                            Console.WriteLine("Error: Product name required (Max 100 char).");
                             return;
                         }
 
                         product.ProductName = nameInput;
                     }
 
-                    Console.Write($"New price (Press enter to keep current): ");
+                    Console.Write($"New price (Enter to keep current): ");
                     var priceInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!string.IsNullOrEmpty(priceInput))
                     {
                         if (!decimal.TryParse(priceInput, out var price) || price < 0)
                         {
-                            Console.WriteLine("Invalid price.");
+                            Console.WriteLine("Error: Invalid price.");
                             return;
                         }
 
                         product.Price = price;
                     }
 
-                    Console.Write($"New category id (Press enter to keep current): ");
+                    Console.Write($"New category ID (Enter to keep current): ");
                     var idInput = Console.ReadLine()?.Trim() ?? string.Empty;
 
                     if (!string.IsNullOrEmpty(idInput))
                     {
                         if (!int.TryParse(idInput, out var id) || id <= 0)
                         {
-                            Console.WriteLine("Invalid category id.");
+                            Console.WriteLine("Error: Invalid category ID.");
                             return;
                         }
 
                         var categoryExists = await db.Categories.AnyAsync(c => c.CategoryId == id);
                         if (!categoryExists)
                         {
-                            Console.WriteLine("Category does not exist.");
+                            Console.WriteLine("Error: Category does not exist.");
                             return;
                         }
 
@@ -1078,7 +1084,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Changes saved!");
+                        Console.WriteLine("Success: Changes saved.");
                     }
                     catch (DbUpdateException exception)
                     {
@@ -1097,7 +1103,7 @@ namespace DATABASPROJEKT
                     var product = await db.Products.FirstOrDefaultAsync(p => p.ProductId == deleteId);
                     if (product == null)
                     {
-                        Console.WriteLine("Product not found!");
+                        Console.WriteLine("Error: Product not found.");
                         return;
                     }
 
@@ -1106,7 +1112,7 @@ namespace DATABASPROJEKT
                     try
                     {
                         await db.SaveChangesAsync();
-                        Console.WriteLine("Product deleted!");
+                        Console.WriteLine("Success: Product deleted.");
                     }
                     catch (DbUpdateException exception)
                     {
