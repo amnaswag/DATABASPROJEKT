@@ -6,11 +6,53 @@ using System.Threading.Tasks;
 using DATABASPROJEKT.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Text; 
+using System.Linq; 
+ 
 
 namespace DATABASPROJEKT
 {
     internal class Program
     {
+        // Encryption for XOR-operationen
+        private const byte XOR_KEY_BYTE = 0xAA; 
+
+        // Method 1: Encryption with XOR och Base64 code result
+        private static string EncryptEmail(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+
+            // Converts the string to bytes
+            var inputBytes = Encoding.UTF8.GetBytes(input);
+            
+            // XOR. operation for every single byte 
+            var encryptedBytes = inputBytes.Select(b => (byte)(b ^ XOR_KEY_BYTE)).ToArray();
+
+            // Return as Base64-string 
+            return Convert.ToBase64String(encryptedBytes);
+        }
+
+        // Method 2: Decription Base64-string with the help of XOR
+        private static string DecryptEmail(string encryptedInput)
+        {
+            if (string.IsNullOrEmpty(encryptedInput)) return encryptedInput;
+
+            try
+            {
+                // Decode Base64
+                var base64Bytes = Convert.FromBase64String(encryptedInput);
+                
+                var decryptedBytes = base64Bytes.Select(b => (byte)(b ^ XOR_KEY_BYTE)).ToArray();
+
+                // Converts back to readable string 
+                return Encoding.UTF8.GetString(decryptedBytes);
+            }
+            catch (FormatException)
+            {
+                return encryptedInput;
+            }
+        }
+        
         static async Task Main(string[] args)
         {
             Console.WriteLine("DB Location: " + Path.Combine(AppContext.BaseDirectory, "shop.db"));
@@ -34,9 +76,9 @@ namespace DATABASPROJEKT
                 if (!await db.Customers.AnyAsync())
                 {
                     db.Customers.AddRange(
-                        new Customer { CustomerName = "Amna Swag", Email = "Amna.Swag@hotmail.com", City = "Stockholm" },
-                        new Customer { CustomerName = "Ben Benson", Email = "BenB@gmail.com", City = "Malmö" },
-                        new Customer { CustomerName = "Carl Carlson", Email = "CarlC@outlook.com", City = "Göteborg" }
+                        new Customer { CustomerName = "Amna Swag", Email = EncryptEmail("Amna.Swag@hotmail.com"), City = "Stockholm" },
+                        new Customer { CustomerName = "Ben Benson", Email = EncryptEmail("BenB@gmail.com"), City = "Malmö" },
+                        new Customer { CustomerName = "Carl Carlson", Email = EncryptEmail("CarlC@outlook.com"), City = "Göteborg" }
                     );
 
                     await db.SaveChangesAsync();
@@ -495,7 +537,9 @@ namespace DATABASPROJEKT
                     Console.WriteLine(" ID | Name | Email | City ");
                     foreach (var customer in customers)
                     {
-                        Console.WriteLine($" {customer.CustomerId} | {customer.CustomerName} | {customer.Email} | {customer.City} ");
+                        // DEKRYPTERAR EMAIL FÖRE VISNING
+                        var decryptedEmail = DecryptEmail(customer.Email);
+                        Console.WriteLine($" {customer.CustomerId} | {customer.CustomerName} | {decryptedEmail} | {customer.City} ");
                     }
                 }
                 
@@ -532,18 +576,19 @@ namespace DATABASPROJEKT
                         Console.WriteLine("Error: City required (Max 100 char).");
                         return;
                     }
-
-                    var emailExists = await db.Customers.AnyAsync(c => c.Email == mail);
+                    
+                    var encryptedMail = EncryptEmail(mail);
+                    var emailExists = await db.Customers.AnyAsync(c => c.Email == encryptedMail);
                     if (emailExists)
                     {
                         Console.WriteLine("Error: Email already exists. Use a different email.");
                         return;
                     }
-
+                    
                     db.Customers.Add(new Customer
                     {
                         CustomerName = name,
-                        Email = mail,
+                        Email = encryptedMail, 
                         City = city
                     });
 
@@ -572,11 +617,14 @@ namespace DATABASPROJEKT
                         Console.WriteLine("Error: Customer not found.");
                         return;
                     }
+                    
+                    var currentEmailDecrypted = DecryptEmail(customer.Email);
 
                     Console.WriteLine($"--- Editing Customer ID: {customer.CustomerId} ---");
                     Console.WriteLine($"Current name: {customer.CustomerName}");
-                    Console.WriteLine($"Current email: {customer.Email}");
+                    Console.WriteLine($"Current email: {currentEmailDecrypted}"); // Visar dekrypterad
                     Console.WriteLine($"Current city: {customer.City}");
+
 
                     Console.Write($"New name (Enter to keep current): ");
                     var name = Console.ReadLine()?.Trim() ?? string.Empty;
@@ -602,16 +650,18 @@ namespace DATABASPROJEKT
                             Console.WriteLine("Error: Email required (Max 100 char).");
                             return;
                         }
-
+                        
+                        var newEncryptedMail = EncryptEmail(mail);
+                        
                         var emailTaken = await db.Customers
-                            .AnyAsync(c => c.Email == mail && c.CustomerId != editId);
+                            .AnyAsync(c => c.Email == newEncryptedMail && c.CustomerId != editId);
                         if (emailTaken)
                         {
                             Console.WriteLine("Error: Email already taken. Try another.");
                             return;
                         }
 
-                        customer.Email = mail;
+                        customer.Email = newEncryptedMail; 
                     }
 
                     Console.Write($"New city (Enter to keep current): ");
@@ -709,7 +759,8 @@ namespace DATABASPROJEKT
                     Console.WriteLine(" ID | Name | Email ");
                     foreach (var customer in customers)
                     {
-                        Console.WriteLine($" {customer.CustomerId} | {customer.CustomerName} | {customer.Email} ");
+                        var decryptedEmail = DecryptEmail(customer.Email);
+                        Console.WriteLine($" {customer.CustomerId} | {customer.CustomerName} | {decryptedEmail} ");
                     }
 
                     Console.Write("Enter customer ID: ");
@@ -1090,7 +1141,6 @@ namespace DATABASPROJEKT
                     {
                         Console.WriteLine("DB Error: " + exception.GetBaseException().Message);
                     }
-
                 }
                 
                 /// <summary>

@@ -11,11 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EHandelDb.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20251208085959_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251210202216_InitialCreateClean")]
+    partial class InitialCreateClean
     {
         /// <inheritdoc />
-        protected void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.11");
