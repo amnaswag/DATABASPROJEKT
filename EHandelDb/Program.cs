@@ -577,7 +577,6 @@ namespace DATABASPROJEKT
                         return;
                     }
                     
-                    // KONTROLLERAR MOT KRYPTERADE EMAILS FÖR UNIKHET
                     var encryptedMail = EncryptEmail(mail);
                     var emailExists = await db.Customers.AnyAsync(c => c.Email == encryptedMail);
                     if (emailExists)
@@ -589,7 +588,7 @@ namespace DATABASPROJEKT
                     db.Customers.Add(new Customer
                     {
                         CustomerName = name,
-                        Email = encryptedMail, // Lagrar krypterad email
+                        Email = encryptedMail, 
                         City = city
                     });
 
@@ -619,7 +618,6 @@ namespace DATABASPROJEKT
                         return;
                     }
                     
-                    // DEKRYPTERAR NUvarande EMAIL FÖR VISNING
                     var currentEmailDecrypted = DecryptEmail(customer.Email);
 
                     Console.WriteLine($"--- Editing Customer ID: {customer.CustomerId} ---");
@@ -653,7 +651,6 @@ namespace DATABASPROJEKT
                             return;
                         }
                         
-                        // KONTROLLERAR MOT ANDRA KRYPTERADE EMAILS
                         var newEncryptedMail = EncryptEmail(mail);
                         
                         var emailTaken = await db.Customers
@@ -664,7 +661,7 @@ namespace DATABASPROJEKT
                             return;
                         }
 
-                        customer.Email = newEncryptedMail; // Krypterar och lagrar ny email
+                        customer.Email = newEncryptedMail; 
                     }
 
                     Console.Write($"New city (Enter to keep current): ");
@@ -762,7 +759,6 @@ namespace DATABASPROJEKT
                     Console.WriteLine(" ID | Name | Email ");
                     foreach (var customer in customers)
                     {
-                        // DEKRYPTERAR EMAIL FÖR VISNING
                         var decryptedEmail = DecryptEmail(customer.Email);
                         Console.WriteLine($" {customer.CustomerId} | {customer.CustomerName} | {decryptedEmail} ");
                     }
