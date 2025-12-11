@@ -17,7 +17,7 @@ namespace DATABASPROJEKT
         // Encryption for XOR-operationen
         private const byte XOR_KEY_BYTE = 0xAA; 
 
-        // Method 1: Encryption with XOR och Base64 code result
+        // ncryption with XOR och Base64 code result
         private static string EncryptEmail(string input)
         {
             if (string.IsNullOrEmpty(input)) return input;
@@ -32,7 +32,7 @@ namespace DATABASPROJEKT
             return Convert.ToBase64String(encryptedBytes);
         }
 
-        // Method 2: Decription Base64-string with the help of XOR
+        // Decription Base64-string with the help of XOR
         private static string DecryptEmail(string encryptedInput)
         {
             if (string.IsNullOrEmpty(encryptedInput)) return encryptedInput;
@@ -537,7 +537,6 @@ namespace DATABASPROJEKT
                     Console.WriteLine(" ID | Name | Email | City ");
                     foreach (var customer in customers)
                     {
-                        // DEKRYPTERAR EMAIL FÖRE VISNING
                         var decryptedEmail = DecryptEmail(customer.Email);
                         Console.WriteLine($" {customer.CustomerId} | {customer.CustomerName} | {decryptedEmail} | {customer.City} ");
                     }
@@ -622,7 +621,7 @@ namespace DATABASPROJEKT
 
                     Console.WriteLine($"--- Editing Customer ID: {customer.CustomerId} ---");
                     Console.WriteLine($"Current name: {customer.CustomerName}");
-                    Console.WriteLine($"Current email: {currentEmailDecrypted}"); // Visar dekrypterad
+                    Console.WriteLine($"Current email: {currentEmailDecrypted}"); 
                     Console.WriteLine($"Current city: {customer.City}");
 
 
