@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Text; 
 using System.Linq; 
- 
 
 namespace DATABASPROJEKT
 {
